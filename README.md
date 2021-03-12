@@ -29,11 +29,15 @@ The dual band transceiver option is currently considered experimental and should
 
 Programming
 
-Before being able to upload programs to the MCU you must first flash a bootloader and configure the chip to use the internal oscillator. Instead of reinventing the wheel we use the breadboard Arduino board configuration. Copy the contents of the breadboard-1-6-x.zip file to your Arduino hardware directory then restart the Arduino IDE.
+I have started sending out cards that are already populated with the MCU and the minimum passives required to make a crossband reapeater, the only components required are the DRA818 V and U modules. On these the ATmega328 has already had the bootloader flashed to them. They have also had the basic sketch that is in this repo uploaded to them to verify the bootloader works. I have also moved away from the breadboard board configuration and have moved to MiniCore instead. It is a an improved solution. Instructions for installing MiniCore with the Arduino IDE can be found here https://github.com/MCUdude/MiniCore#how-to-install
 
-Connect to the ICSP header with your programmer or using another Arduino as an ISP programmer. Select “Atmega328 on a breadboard (8MHz internal clock)” for the Board in the Tools menu. Following that, select Burn Bootloader from the Tools menu. Once complete you will be able to use the FTDI connection to upload programs from the Arduino IDE.
+Once installed just configure for the proper hardware. Select Tools > Board > MiniCore > ATmega328. Then select Tools > Clock > Internal 8MHz.
 
- A very simple crossband sketch is provided in this repo. It is setup for 145.725MHz input and 434.00MHz output, these are set by the variables named uplink and downlink. Be sure to check your local bandplan to ensure you’re opertaing in the correct portions of the bands. In all cases, please avoid 145.800-146.000MHz and 435.000-438.000MHz as these are internationally recognized satellite bands. DO NOT underestimate the ability of 0.5-1W of power being able to cause interference to satellites. It should also be noted that other weak signal portions of the bands should be avoided.
+Some cards are equipped with the ATmega328PB. Select the variant that matches the chip on your QSL with Tools > Variant.
+
+From there you can upload your own sketches from the Arduino IDE using the FTDI header J3.
+
+A very simple crossband sketch is provided in this repo. It is setup for 145.725MHz input and 434.00MHz output, these are set by the variables named uplink and downlink. Be sure to check your local bandplan to ensure you’re opertaing in the correct portions of the bands. In all cases, please avoid 145.800-146.000MHz and 435.000-438.000MHz as these are internationally recognized satellite bands. DO NOT underestimate the ability of 0.5-1W of power being able to cause interference to satellites. It should also be noted that other weak signal portions of the bands should be avoided.
 
 The provided sketch is very simple and is intended to show how the modules are configured using AT commands. Pin definitions are there to provide an example of what functions are designed for each GPIO. The main loop is very simple in that it reads the squelch pin status on the input module and keys the output module when a signal is detected.
 
